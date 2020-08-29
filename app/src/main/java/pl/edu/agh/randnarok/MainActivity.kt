@@ -6,6 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import pl.edu.agh.randnarok.fragments.EventsFragment
+import pl.edu.agh.randnarok.fragments.SearchEventsFormFragment
+import pl.edu.agh.randnarok.fragments.SettingsFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         bottomNavigation = findViewById(R.id.bottom_nav)
         bottomNavigation!!.setOnNavigationItemSelectedListener(navigationItemSelectedListener)
 
@@ -33,22 +37,22 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-    var navigationItemSelectedListener =
+    private var navigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
-//            when (item.itemId) {
-//                R.id.nav_events -> {
-//                    openFragment(EventsFragment.newInstance(null), false)
-//                    return@OnNavigationItemSelectedListener true
-//                }
-//                R.id.nav_form -> {
-//                    openFragment(FormFragment.newInstance(), false)
-//                    return@OnNavigationItemSelectedListener true
-//                }
-//                R.id.nav_settings -> {
-//                    openFragment(SettingsFragment.newInstance(), false)
-//                    return@OnNavigationItemSelectedListener true
-//                }
-//            }
+            when (item.itemId) {
+                R.id.nav_events -> {
+                    openFragment(EventsFragment.newInstance("", ""), false)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.nav_form -> {
+                    openFragment(SearchEventsFormFragment.newInstance("", ""), false)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.nav_settings -> {
+                    openFragment(SettingsFragment.newInstance("", ""), false)
+                    return@OnNavigationItemSelectedListener true
+                }
+            }
             false
         }
 }
