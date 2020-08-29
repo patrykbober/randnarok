@@ -31,15 +31,15 @@
 
         <TextView
             android:id="@+id/event_name_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nazwa:" />
+            android:text="@string/event_name_label"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/event_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,15 +56,15 @@
 
         <TextView
             android:id="@+id/event_date_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/event_date_label"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/event_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,15 +81,15 @@
 
         <TextView
             android:id="@+id/event_time_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/event_time_label"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/event_time"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -106,15 +106,15 @@
 
         <TextView
             android:id="@+id/event_price_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/event_price_label"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/event_price"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -139,15 +139,15 @@
 
         <TextView
             android:id="@+id/event_location_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/event_location_label"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/event_location"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -165,10 +165,9 @@
         app:layout_constraintTop_toTopOf="@+id/guideline">
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/event_description"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TextView" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
