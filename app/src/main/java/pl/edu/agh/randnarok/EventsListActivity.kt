@@ -1,5 +1,6 @@
 package pl.edu.agh.randnarok
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.android.volley.Response
@@ -41,4 +42,15 @@ class EventsListActivity : AppCompatActivity() {
         requestQueue.add(directionsRequest)
     }
 
+    fun test(){
+        val intent = Intent(this, EventActivity::class.java).apply {
+            putExtra("name", "aaaaaaaa")
+            putExtra("date", "bbbbaaaa")
+            putExtra("price", "ddddaaaa")
+            putExtra("time", "bbbbaaaa")
+            putExtra("location", "wololo")
+            putExtra("description", "ccccaaaa")
+        }
+        startActivity(intent)
+    }
 }
