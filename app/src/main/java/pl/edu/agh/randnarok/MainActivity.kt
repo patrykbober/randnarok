@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import pl.edu.agh.randnarok.fragments.EventsFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,11 +35,11 @@ class MainActivity : AppCompatActivity() {
 
     var navigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_events -> {
-                    openFragment(EventsFragment.newInstance(null), false)
-                    return@OnNavigationItemSelectedListener true
-                }
+//            when (item.itemId) {
+//                R.id.nav_events -> {
+//                    openFragment(EventsFragment.newInstance(null), false)
+//                    return@OnNavigationItemSelectedListener true
+//                }
 //                R.id.nav_form -> {
 //                    openFragment(FormFragment.newInstance(), false)
 //                    return@OnNavigationItemSelectedListener true
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 //                    openFragment(SettingsFragment.newInstance(), false)
 //                    return@OnNavigationItemSelectedListener true
 //                }
-            }
+//            }
             false
         }
 }
