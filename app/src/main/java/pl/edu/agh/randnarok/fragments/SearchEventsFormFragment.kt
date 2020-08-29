@@ -61,6 +61,9 @@ class SearchEventsFormFragment : Fragment() {
             EventsFragment().apply {
                 arguments = Bundle().apply { }
             }
+
+        @JvmStatic
+        fun newInstance () = SearchEventsFormFragment()
     }
 
 }

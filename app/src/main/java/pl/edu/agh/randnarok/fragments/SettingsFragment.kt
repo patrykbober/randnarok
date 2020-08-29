@@ -56,5 +56,10 @@ class SettingsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
+        @JvmStatic
+        fun newInstance (): SettingsFragment {
+            return SettingsFragment()
+        }
     }
 }

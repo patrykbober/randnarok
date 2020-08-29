@@ -41,15 +41,15 @@ class MainActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_events -> {
-                    openFragment(EventsFragment.newInstance("", ""), false)
+                    openFragment(EventsFragment.newInstance(), false)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_form -> {
-                    openFragment(SearchEventsFormFragment.newInstance("", ""), false)
+                    openFragment(SearchEventsFormFragment.newInstance(), false)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_settings -> {
-                    openFragment(SettingsFragment.newInstance("", ""), false)
+                    openFragment(SettingsFragment.newInstance(), false)
                     return@OnNavigationItemSelectedListener true
                 }
             }
