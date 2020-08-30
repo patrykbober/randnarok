@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import pl.edu.agh.randnarok.MainActivity
+import pl.edu.agh.randnarok.ChoosePreferencesActivity
 import pl.edu.agh.randnarok.R
 
 class LoginActivity : AppCompatActivity() {
@@ -16,8 +16,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun openMainActivity(view: View) {
-        val mainActivityIntent = Intent(this, MainActivity::class.java)
-        startActivity(mainActivityIntent)
+        val choosePreferencesActivity = Intent(this, ChoosePreferencesActivity::class.java)
+        startActivity(choosePreferencesActivity)
         finish()
 
 
