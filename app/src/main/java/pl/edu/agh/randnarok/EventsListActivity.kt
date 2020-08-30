@@ -1,25 +1,40 @@
 package pl.edu.agh.randnarok
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.event_layout.*
 import pl.edu.agh.randnarok.model.Event
 import org.json.JSONObject
+import java.net.URL
 
 class EventsListActivity : AppCompatActivity() {
     var eventsList = mutableListOf<Event>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.event_layout)
         getEvents()
     }
 
     private fun onEventsReady(){
         Log.d("TAG", eventsList.toString())
+//        loadImage(imageView, "http://student.agh.edu.pl/~bociepka/randnarok/cooking.jpg")
+    }
+
+    private fun loadImage(imageView: ImageView, url: String){
+        val myThread = Thread {
+
+            val url = URL(url)
+            val fullBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+            runOnUiThread { imageView.setImageBitmap(fullBitmap) }
+        }
+        myThread.start()
     }
 
     private fun getEvents() {
