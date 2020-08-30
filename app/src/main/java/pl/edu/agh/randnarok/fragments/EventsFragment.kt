@@ -1,16 +1,29 @@
 package pl.edu.agh.randnarok.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.ListView
+import androidx.fragment.app.Fragment
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
+import pl.edu.agh.randnarok.EventsListActivity
 import pl.edu.agh.randnarok.R
+import pl.edu.agh.randnarok.model.Event
+import pl.edu.agh.randnarok.model.EventAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private var listView: ListView? = null
+private var adapter: EventAdapter? = null
+private var dataList: ArrayList<Event> = ArrayList<Event>()
 
 /**
  * A simple [Fragment] subclass.
@@ -18,15 +31,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class EventsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -35,7 +43,45 @@ class EventsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_events, container, false)
+        val list: ArrayList<Event> = ArrayList<Event>()
+        val view = inflater.inflate(R.layout.fragment_events, container, false)
+        getEvents(view)
+        return view
+    }
+
+    private fun getEvents(view: View) {
+        dataList.removeAll{true}
+        val url = "http://student.agh.edu.pl/~bociepka/randnarok/data.json"
+
+        val directionsRequest =
+            object : StringRequest(Method.GET, url, Response.Listener<String> { response ->
+                val jsonResponse = JSONObject(response)
+                val eventsArray = jsonResponse.getJSONArray("events")
+                for (i in 0..eventsArray.length() - 1) {
+                    val jsonEvent = eventsArray.getJSONObject(i)
+                    var name = jsonEvent.get("name").toString()
+                    var date = jsonEvent.get("date").toString()
+                    var startTime = jsonEvent.get("startTime").toString()
+                    var endTime = jsonEvent.get("endTime").toString()
+                    var city = jsonEvent.get("city").toString()
+                    var address = jsonEvent.get("address").toString()
+                    var desc = jsonEvent.get("description").toString()
+                    var price = jsonEvent.get("price").toString()
+                    var picture = jsonEvent.get("picture").toString()
+                    val idx = jsonEvent.get("idx").toString().toInt()
+                    val departure = Event(idx, name, date, startTime, endTime, city, address, desc, price, picture)
+                    dataList.add(departure)
+                }
+                listView = view.findViewById<ListView>(R.id.events_list)
+                adapter = EventAdapter(activity!!, dataList)
+                listView!!.adapter = adapter
+
+                adapter!!.notifyDataSetChanged()
+            }, Response.ErrorListener {
+                Log.e("Volley error", it.toString())
+            }) {}
+        val requestQueue = Volley.newRequestQueue(activity)
+        requestQueue.add(directionsRequest)
     }
 
     companion object {
@@ -58,9 +104,7 @@ class EventsFragment : Fragment() {
 //            }
         @JvmStatic
         fun newInstance (): EventsFragment {
-            return EventsFragment().apply {
-                arguments = Bundle()
-            }
+            return EventsFragment()
         }
 
     }
