@@ -1,5 +1,8 @@
 package pl.edu.agh.randnarok.adapters
 
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.edu.agh.randnarok.ChoosePreferencesActivity
 import pl.edu.agh.randnarok.R
 import pl.edu.agh.randnarok.model.Event
+import java.net.URI
 
 class ChoosePreferencesAdapter(
     private val activity: ChoosePreferencesActivity,
@@ -27,7 +31,7 @@ class ChoosePreferencesAdapter(
     override fun onBindViewHolder(holder: ChoosePreferencesViewHolder, position: Int) {
         val event: Event = list[position]
 
-        holder.bind(event)
+        holder.bind(event, activity)
 
 
     }
@@ -37,82 +41,29 @@ class ChoosePreferencesAdapter(
         private val eventName: TextView = itemView.findViewById(R.id.choose_preferences_event_name)
         private val eventDescription: TextView =
             itemView.findViewById(R.id.choose_preferences_event_description)
+        private val eventImage = itemView.findViewById<ImageView>(R.id.choose_preferences_image)
         private val photo: ImageView = itemView.findViewById(R.id.choose_preferences_image)
 
-        fun bind(event: Event) {
+        fun bind(event: Event, context: Context) {
             eventName.text = event.name
             eventDescription.text = event.desc
-            //TODO set photo
+
+            var uri = URI.create(event.picture);
+            var path = uri.getPath();
+            path = path.substring(path.lastIndexOf('/') + 1);
+            path = path.substring(0, path.length - 4).toLowerCase()
+
+            val resources: Resources = context.resources
+            val resourceId: Int = resources.getIdentifier(
+                path, "drawable",
+                context.packageName
+            )
+
+            val icon = BitmapFactory.decodeResource(
+                context.resources,
+                resourceId
+            )
+            eventImage.setImageBitmap(icon)
         }
     }
-
 }
-//
-//    ArrayAdapter<Event?>(mContext, 0, list as List<Event?>) {
-//    private var eventList: List<Event> = ArrayList()
-//
-//    init {
-//        eventList = list
-//    }
-//
-//    @NonNull
-//    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-//        var listItem = convertView
-//        if (listItem == null) {
-//            listItem = LayoutInflater.from(mContext).inflate(R.layout.listitem_choose_preferences, parent, false)
-//        }
-//        val currentEvent: Event = eventList[position]
-//        val eventName = listItem!!.findViewById<View>(R.id.choose_preferences_event_name) as TextView
-//        eventName.text = currentEvent.name
-//        val description = listItem.findViewById<View>(R.id.choose_preferences_event_description) as TextView
-//        description.text = currentEvent.desc
-//        val photo = listItem.findViewById<View>(R.id.choose_preferences_image) as ImageView
-//
-//        when {
-//            currentEvent.name.contains("ang") -> {
-//                val icon = BitmapFactory.decodeResource(
-//                    context.resources,
-//                    R.drawable.union_jack
-//                )
-//                photo.setImageBitmap(icon)
-//            }
-//            currentEvent.name.contains("tań") -> {
-//                val icon = BitmapFactory.decodeResource(
-//                    context.resources,
-//                    R.drawable.dance
-//                )
-//                photo.setImageBitmap(icon)
-//            }
-//            currentEvent.name.contains("gar") -> {
-//                val icon = BitmapFactory.decodeResource(
-//                    context.resources,
-//                    R.drawable.garncarstwo
-//                )
-//                photo.setImageBitmap(icon)
-//            }
-//            currentEvent.name.contains("bungee") -> {
-//                val icon = BitmapFactory.decodeResource(
-//                    context.resources,
-//                    R.drawable.bungee
-//                )
-//                photo.setImageBitmap(icon)
-//            }
-//            currentEvent.name.contains("got") -> {
-//                val icon = BitmapFactory.decodeResource(
-//                    context.resources,
-//                    R.drawable.cooking
-//                )
-//                photo.setImageBitmap(icon)
-//            }
-//            currentEvent.name.toLowerCase().contains("surprise") -> {
-//                val icon = BitmapFactory.decodeResource(
-//                    context.resources,
-//                    R.drawable.question_mark_wtf
-//                )
-//                photo.setImageBitmap(icon)
-//            }
-//        }
-//
-//        return listItem
-//    }
-//}

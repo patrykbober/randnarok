@@ -56,6 +56,7 @@ class ChoosePreferencesActivity : AppCompatActivity() {
                         price,
                         picture
                     )
+                    dataList.add(departure)
                 }
 
                 choosePreferencesAdapter = ChoosePreferencesAdapter(this, dataList)
@@ -63,6 +64,7 @@ class ChoosePreferencesActivity : AppCompatActivity() {
                     layoutManager = LinearLayoutManager(this@ChoosePreferencesActivity)
                     adapter = choosePreferencesAdapter
                 }
+                choose_preferences_recycler_layout.adapter = choosePreferencesAdapter
                 choosePreferencesAdapter.notifyDataSetChanged()
 
 //                choose_preferences_recycler_layout.onItemClickListener =
