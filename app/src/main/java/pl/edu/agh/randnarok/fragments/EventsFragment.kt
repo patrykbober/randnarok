@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import pl.edu.agh.randnarok.EventActivity
 import pl.edu.agh.randnarok.R
@@ -44,6 +45,7 @@ class EventsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        activity!!.toolbar_title.text = "My events"
         val list: ArrayList<Event> = ArrayList<Event>()
         val view = inflater.inflate(R.layout.fragment_events, container, false)
         getEvents(view)

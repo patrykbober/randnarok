@@ -1,15 +1,21 @@
 package pl.edu.agh.randnarok.fragments
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_search_events_form.*
 import pl.edu.agh.randnarok.EventsListActivity
 import pl.edu.agh.randnarok.R
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -17,6 +23,9 @@ import pl.edu.agh.randnarok.R
  * create an instance of this fragment.
  */
 class SearchEventsFormFragment : Fragment() {
+
+    private lateinit var dateFromPickerListener: OnDateSetListener
+    private lateinit var dateToPickerListener: OnDateSetListener
 
     private lateinit var locationEdit: EditText
     private lateinit var dateFromEdit: EditText
@@ -28,6 +37,7 @@ class SearchEventsFormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity!!.toolbar_title.text = "Search for events"
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_events_form, container, false)
     }
@@ -44,11 +54,59 @@ class SearchEventsFormFragment : Fragment() {
         priceToEdit = search_events_form_price_to_edit_text
 
         setButtonListener()
+        setDatePickerOpener()
     }
 
     fun setButtonListener() {
         search_events_form_submit_button.setOnClickListener(View.OnClickListener {
             openEventsListActivity(it)
+        })
+    }
+
+    fun setDatePickerOpener() {
+        dateFromPickerListener =
+            OnDateSetListener { view, year, month, dayOfMonth ->
+                var month = month
+                month += 1
+                var monthText = month.toString() + ""
+                if (month < 10) monthText = "0$monthText"
+                dateFromEdit.setText("$dayOfMonth.$monthText.$year")
+            }
+        dateToPickerListener =
+            OnDateSetListener { view, year, month, dayOfMonth ->
+                var month = month
+                month += 1
+                var monthText = month.toString() + ""
+                if (month < 10) monthText = "0$monthText"
+                dateToEdit.setText("$dayOfMonth.$monthText.$year")
+            }
+        dateFromEdit.setOnClickListener(View.OnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH]
+            val day = calendar[Calendar.DAY_OF_MONTH]
+            val dialog = DatePickerDialog(
+                activity!!,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                dateFromPickerListener,
+                year, month, day
+            )
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+        })
+        dateToEdit.setOnClickListener(View.OnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar[Calendar.YEAR]
+            val month = calendar[Calendar.MONTH]
+            val day = calendar[Calendar.DAY_OF_MONTH]
+            val dialog = DatePickerDialog(
+                activity!!,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                dateToPickerListener,
+                year, month, day
+            )
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
         })
     }
 
