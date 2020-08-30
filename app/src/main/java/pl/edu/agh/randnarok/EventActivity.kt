@@ -2,6 +2,7 @@ package pl.edu.agh.randnarok
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import kotlinx.android.synthetic.main.event_layout.*
 
 class EventActivity : AppCompatActivity() {
@@ -9,6 +10,7 @@ class EventActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.event_layout)
         setFieldValues()
+        pay_button.setOnClickListener { pay_button.visibility = View.INVISIBLE }
     }
 
     fun setFieldValues(){
@@ -24,6 +26,8 @@ class EventActivity : AppCompatActivity() {
         event_price.text = price
         event_location.text = location
         event_description.text = description
+
+        pay_button.visibility = View.VISIBLE
         //TODO obrazek
     }
 }
