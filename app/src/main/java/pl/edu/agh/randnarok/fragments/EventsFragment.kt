@@ -1,5 +1,6 @@
 package pl.edu.agh.randnarok.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +13,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
-import pl.edu.agh.randnarok.EventsListActivity
+import pl.edu.agh.randnarok.EventActivity
 import pl.edu.agh.randnarok.R
 import pl.edu.agh.randnarok.model.Event
 import pl.edu.agh.randnarok.model.EventAdapter
@@ -75,8 +76,23 @@ class EventsFragment : Fragment() {
                 listView = view.findViewById<ListView>(R.id.events_list)
                 adapter = EventAdapter(activity!!, dataList)
                 listView!!.adapter = adapter
-
                 adapter!!.notifyDataSetChanged()
+
+                listView!!.onItemClickListener =
+                    OnItemClickListener { parent, view, position, id ->
+                        val pickedEvent = dataList.get(position)
+                        val intent =
+                            Intent(activity, EventActivity::class.java).apply {
+                            putExtra("name", pickedEvent.name)
+                            putExtra("date", pickedEvent.date)
+                            putExtra("price", pickedEvent.price)
+                            putExtra("time", pickedEvent.startTime)
+                            putExtra("location", pickedEvent.address + " " + pickedEvent.city)
+                            putExtra("description", pickedEvent.desc)
+                        }
+                        startActivity(intent)
+                    }
+
             }, Response.ErrorListener {
                 Log.e("Volley error", it.toString())
             }) {}
