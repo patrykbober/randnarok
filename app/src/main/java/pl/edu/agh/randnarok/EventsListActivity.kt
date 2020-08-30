@@ -36,13 +36,13 @@ class EventsListActivity : AppCompatActivity() {
     }
 
     private fun loadImage(imageView: ImageView, url: String){
-        val myThread = Thread {
-
-            val url = URL(url)
-            val fullBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-            runOnUiThread { imageView.setImageBitmap(fullBitmap) }
-        }
-        myThread.start()
+//        val myThread = Thread {
+//
+//            val url = URL(url)
+//            val fullBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+//            runOnUiThread { imageView.setImageBitmap(fullBitmap) }
+//        }
+//        myThread.start()
     }
 
     private fun getEvents() {
@@ -65,7 +65,7 @@ class EventsListActivity : AppCompatActivity() {
                     var price = jsonEvent.get("price").toString()
                     var picture = jsonEvent.get("picture").toString()
                     val idx = jsonEvent.get("idx").toString().toInt()
-                    val departure = Event(idx, name, date, startTime, endTime, city, address, desc, price, picture)
+                    val departure = Event(idx, name, date, startTime, endTime, city, address, desc, price, "bungee.jpg")
                     if (i in setOf<Int>(2, 4))     //XDDDD
                         dataList.add(departure)
                 }
