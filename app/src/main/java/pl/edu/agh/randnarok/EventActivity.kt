@@ -1,10 +1,12 @@
 package pl.edu.agh.randnarok
 
+import android.content.res.Resources
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.event_layout.*
+import java.net.URI
 
 class EventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +23,7 @@ class EventActivity : AppCompatActivity() {
         val price = intent.getStringExtra("price")
         val location = intent.getStringExtra("location")
         val description = intent.getStringExtra("description")
+        val picture = intent.getStringExtra("picture")
 
         event_name.text = name
         event_date.text = date
@@ -34,49 +37,21 @@ class EventActivity : AppCompatActivity() {
         pay_button.visibility = View.VISIBLE
 
 
-        when {
-            name.contains("ang") -> {
-                val icon = BitmapFactory.decodeResource(
-                    this.resources,
-                    R.drawable.union_jack
-                )
-                photo.setImageBitmap(icon)
-            }
-            name.contains("tań") -> {
-                val icon = BitmapFactory.decodeResource(
-                    this.resources,
-                    R.drawable.dance
-                )
-                photo.setImageBitmap(icon)
-            }
-            name.contains("gar") -> {
-                val icon = BitmapFactory.decodeResource(
-                    this.resources,
-                    R.drawable.garncarstwo
-                )
-                photo.setImageBitmap(icon)
-            }
-            name.contains("bungee") -> {
-                val icon = BitmapFactory.decodeResource(
-                    this.resources,
-                    R.drawable.bungee
-                )
-                photo.setImageBitmap(icon)
-            }
-            name.contains("got") -> {
-                val icon = BitmapFactory.decodeResource(
-                    this.resources,
-                    R.drawable.cooking
-                )
-                photo.setImageBitmap(icon)
-            }
-            name.toLowerCase().contains("surprise") -> {
-                val icon = BitmapFactory.decodeResource(
-                    this.resources,
-                    R.drawable.question_mark_wtf
-                )
-                photo.setImageBitmap(icon)
-            }
-        }
+        var uri = URI.create(picture);
+        var path = uri.getPath();
+        path = path.substring(path.lastIndexOf('/') + 1);
+        path = path.substring(0, path.length - 4).toLowerCase()
+
+        val resources: Resources = this.resources
+        val resourceId: Int = resources.getIdentifier(
+            path, "drawable",
+            this.packageName
+        )
+
+        val icon = BitmapFactory.decodeResource(
+            this.resources,
+            resourceId
+        )
+        photo.setImageBitmap(icon)
     }
 }

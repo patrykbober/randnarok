@@ -91,6 +91,7 @@ class EventsFragment : Fragment() {
                             putExtra("time", pickedEvent.startTime)
                             putExtra("location", pickedEvent.address + " " + pickedEvent.city)
                             putExtra("description", pickedEvent.desc)
+                            putExtra("picture", pickedEvent.picture)
                         }
                         startActivity(intent)
                     }

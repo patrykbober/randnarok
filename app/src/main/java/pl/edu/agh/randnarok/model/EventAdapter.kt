@@ -1,7 +1,8 @@
 package pl.edu.agh.randnarok.model
 
-import android.R.drawable
+import android.R.attr.name
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import pl.edu.agh.randnarok.R
+import java.net.URI
 import java.util.*
 
 
@@ -45,50 +47,22 @@ class EventAdapter(
         val photo =
             listItem.findViewById<View>(R.id.event_image) as ImageView
 
-        when {
-            currentEvent.name.contains("ang") -> {
-                val icon = BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.union_jack
-                )
-                photo.setImageBitmap(icon)
-            }
-            currentEvent.name.contains("tań") -> {
-                val icon = BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.dance
-                )
-                photo.setImageBitmap(icon)
-            }
-            currentEvent.name.contains("gar") -> {
-                val icon = BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.garncarstwo
-                )
-                photo.setImageBitmap(icon)
-            }
-            currentEvent.name.contains("bungee") -> {
-                val icon = BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.bungee
-                )
-                photo.setImageBitmap(icon)
-            }
-            currentEvent.name.contains("got") -> {
-                val icon = BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.cooking
-                )
-                photo.setImageBitmap(icon)
-            }
-            currentEvent.name.toLowerCase().contains("surprise") -> {
-                val icon = BitmapFactory.decodeResource(
-                    context.resources,
-                    R.drawable.question_mark_wtf
-                )
-                photo.setImageBitmap(icon)
-            }
-        }
+        var uri = URI.create(currentEvent.picture);
+        var path = uri.getPath();
+        path = path.substring(path.lastIndexOf('/') + 1);
+        path = path.substring(0, path.length - 4).toLowerCase()
+
+        val resources: Resources = context.resources
+        val resourceId: Int = resources.getIdentifier(
+            path, "drawable",
+            context.packageName
+        )
+
+        val icon = BitmapFactory.decodeResource(
+            context.resources,
+            resourceId
+        )
+        photo.setImageBitmap(icon)
 
         return listItem
     }

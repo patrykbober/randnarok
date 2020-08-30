@@ -35,16 +35,6 @@ class EventsListActivity : AppCompatActivity() {
 //        loadImage(imageView, "http://student.agh.edu.pl/~bociepka/randnarok/cooking.jpg")
     }
 
-    private fun loadImage(imageView: ImageView, url: String){
-//        val myThread = Thread {
-//
-//            val url = URL(url)
-//            val fullBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-//            runOnUiThread { imageView.setImageBitmap(fullBitmap) }
-//        }
-//        myThread.start()
-    }
-
     private fun getEvents() {
         dataList.removeAll{true}
         val url = "http://student.agh.edu.pl/~bociepka/randnarok/data.json"
@@ -65,12 +55,12 @@ class EventsListActivity : AppCompatActivity() {
                     var price = jsonEvent.get("price").toString()
                     var picture = jsonEvent.get("picture").toString()
                     val idx = jsonEvent.get("idx").toString().toInt()
-                    val departure = Event(idx, name, date, startTime, endTime, city, address, desc, price, "bungee.jpg")
+                    val departure = Event(idx, name, date, startTime, endTime, city, address, desc, price, picture)
                     if (i in setOf<Int>(2, 4))     //XDDDD
                         dataList.add(departure)
                 }
 
-                val wildcardEvent = Event(99, "Surprise", "2020-09-01", "15:30", "17:30", "Kraków", "Niepomysłowa 12", "Try something different!", "45", "")
+                val wildcardEvent = Event(99, "Surprise", "2020-09-01", "15:30", "17:30", "Kraków", "Niepomysłowa 12", "Try something different!", "45", "http://student.agh.edu.pl/~bociepka/randnarok/question_mark_wtf.jpg")
 
                 dataList.add(wildcardEvent)
                 listView = events_list
@@ -89,6 +79,7 @@ class EventsListActivity : AppCompatActivity() {
                                 putExtra("time", pickedEvent.startTime)
                                 putExtra("location", pickedEvent.address + " " + pickedEvent.city)
                                 putExtra("description", pickedEvent.desc)
+                                putExtra("picture", pickedEvent.picture)
                             }
                         startActivity(intent)
                     }
