@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_search_events_form.*
 import pl.edu.agh.randnarok.EventsListActivity
 import pl.edu.agh.randnarok.R
 
@@ -37,9 +38,18 @@ class SearchEventsFormFragment : Fragment() {
         locationEdit = view.findViewById(R.id.search_events_form_location_edit_text)
         dateFromEdit = view.findViewById(R.id.search_events_form_date_from_edit_text)
         dateToEdit = view.findViewById(R.id.search_events_form_date_to_edit_text)
-        priceFromEdit = view.findViewById(R.id.search_events_form_price_from_edit_text)
-        priceToEdit = view.findViewById(R.id.search_events_form_price_to_edit_text)
+//        priceFromEdit = view.findViewById(R.id.search_events_form_price_from_edit_text)
+        priceFromEdit = search_events_form_price_from_edit_text
+//        priceToEdit = view.findViewById(R.id.search_events_form_price_to_edit_text)
+        priceToEdit = search_events_form_price_to_edit_text
 
+        setButtonListener()
+    }
+
+    fun setButtonListener() {
+        search_events_form_submit_button.setOnClickListener(View.OnClickListener {
+            openEventsListActivity(it)
+        })
     }
 
     fun openEventsListActivity(view: View) {
@@ -47,10 +57,7 @@ class SearchEventsFormFragment : Fragment() {
         intent.putExtra("SEARCH_EVENTS_FORM_LOCATION", locationEdit.text.toString())
         intent.putExtra("SEARCH_EVENTS_FORM_DATE_FROM", dateFromEdit.text.toString())
         intent.putExtra("SEARCH_EVENTS_FORM_DATE_TO", dateFromEdit.text.toString())
-        intent.putExtra(
-            "SEARCH_EVENTS_FORM_PRICE_FROM",
-            Integer.parseInt(priceFromEdit.text.toString())
-        )
+        intent.putExtra("SEARCH_EVENTS_FORM_PRICE_FROM", priceFromEdit.text.toString())
         intent.putExtra("SEARCH_EVENTS_FORM_PRICE_TO", priceToEdit.text.toString())
         startActivity(intent)
     }
